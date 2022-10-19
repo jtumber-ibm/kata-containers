@@ -13,12 +13,12 @@ cp $KATA_DEPLOY_ARTIFACT $KATA_DEPLOY_DIR
 
 pushd $KATA_DEPLOY_DIR
 
-IMAGE_TAG="quay.io/confidential-containers/runtime-payload:kata-containers-$(git rev-parse HEAD)"
+IMAGE_TAG="icr.io/cloud-api-adaptor/runtime-payload:kata-containers-$(git rev-parse HEAD)"
 
 echo "Building the image"
-docker build --tag $IMAGE_TAG .
+docker buildx build --push --platform linux/s390x --build-arg IMAGE=clefos --tag $IMAGE_TAG .
 
 echo "Pushing the image to quay.io"
-docker push $IMAGE_TAG
+# docker push $IMAGE_TAG
 
 popd
